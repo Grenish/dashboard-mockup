@@ -15,7 +15,7 @@ const SideNav = () => {
     "sm:w-5 sm:h-5 w-7 h-7 text-gray-500 hover:text-gray-700 transition-colors duration-200";
 
   return (
-    <header className="sm:h-screen h-auto sm:relative sm:w-auto w-full fixed bottom-0 sm:flex block bg-white">
+    <header className="sm:h-screen h-auto sm:relative sm:w-auto w-full fixed bottom-0 sm:flex block bg-white z-40">
       <nav className="relative sm:h-screen h-auto sm:block flex">
         <div className="p-2 sm:flex hidden flex-col justify-center items-center">
           <img src={butterLogo} alt="logo" className="w-12 scale-x-[-1]" />
