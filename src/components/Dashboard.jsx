@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,11 +8,32 @@ import {
   Legend,
   Tooltip,
 } from "chart.js";
-
 import { userProfile } from "../assets";
-import { UilAngleDown } from "@iconscout/react-unicons";
+import { UilAngleDown, UilAngleRightB } from "@iconscout/react-unicons";
+import Slider, { SliderThumb } from "@mui/material/Slider";
+import { styled } from "@mui/material/styles";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Legend, Tooltip);
+
+const UiSlider = styled(Slider)(({ theme }) => ({
+  color: "#60A5FA",
+  height: 5,
+  width: "80%",
+  padding: "15px 0",
+  "& .MuiSlider-thumb": {
+    height: 15,
+    width: 15,
+    backgroundColor: "#93C5FD",
+    boxShadow: "0 0 2px 0px rgba(0, 0, 0, 0.1)",
+    "&:focus, &:hover, &.Mui-active": {
+      boxShadow: "0px 0px 3px 1px rgba(0, 0, 0, 0.1)",
+    },
+    "&:before": {
+      boxShadow:
+        "0px 0px 1px 0px rgba(0,0,0,0.2), 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 0px 1px 0px rgba(0,0,0,0.12)",
+    },
+  },
+}));
 
 const Dashboard = () => {
   const data = {
@@ -35,6 +56,17 @@ const Dashboard = () => {
       desc: "Withdrawal Transfer to Bank-XXX11",
     },
   ];
+
+  const [value, setValue] = React.useState(12);
+  const [value2, setValue2] = React.useState(65);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChange2 = (event, newValue) => {
+    setValue2(newValue);
+  };
 
   return (
     <div className="w-full flex flex-col sm:flex-row">
@@ -115,7 +147,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className=" sm:w-[50%] w-full border-r-2 sm:mb-0 mb-20">
+      <div className=" sm:w-[55%] w-full sm:mb-0 mb-20">
         <div className="flex flex-col w-full sm:px-20 px-5 pt-10">
           <div className="flex flex-col font-pop">
             <span className="text-indigo-600 font-semibold sm:text-sm text-md">
@@ -196,16 +228,204 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex gap-5">
-                <ProgressBar progress={78} />
-                <ProgressBar progress={95} />
-                <ProgressBar progress={59} />
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={78} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Average
+                  </span>
+                </span>
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={95} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Top
+                  </span>
+                </span>
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={59} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Me
+                  </span>
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="">
-       
+
+      <div className="sm:h-auto  h-screen px-5 relative ">
+        <div className="flex flex-col-reverse ">
+          {/* PC */}
+          <div className="mt-10 bg-gray-100 p-4 rounded-xl sm:block hidden">
+            <span className="text-gray-800 text-md font-semibold font-pop">
+              Retirement Strategy
+            </span>
+            {/* Employee Contribution */}
+            <div className="text-sm font-pop mt-4 flex flex-col">
+              <span className="font-semibold text-sm">
+                Employee Contribution
+              </span>
+              <div className="flex items-center sm:w-[240px] w-full">
+                <div className="w-full mt-2 flex items-center justify-between ">
+                  <UiSlider
+                    value={value}
+                    onChange={handleChange}
+                    aria-labelledby="continuous-slider"
+                  />
+                  <div className="font-semibold">{value}%</div>
+                </div>
+              </div>
+            </div>
+            {/* Retirement Age */}
+            <div className="text-sm font-pop mt-4 flex flex-col">
+              <span className="font-semibold text-sm">Retirement Age</span>
+              <div className="flex items-center sm:w-[240px] w-full">
+                <div className="w-full mt-2 flex items-center justify-between ">
+                  <UiSlider
+                    value={value2}
+                    onChange={handleChange2}
+                    aria-labelledby="continuous-slider"
+                  />
+                  <div className="font-semibold">{value2}</div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full border-b-2 border-gray-300 rounded-xl my-3"></div>
+            {/* PC */}
+            <div className="w-full">
+              <div className="w-full text-sm font-pop flex justify-between font-semibold">
+                <span>Employer Contribution</span>
+                <span>8.4%</span>
+              </div>
+              <div className="w-full text-sm font-pop flex justify-between font-semibold mt-3">
+                <span>Interest Rate</span>
+                <span>5%</span>
+              </div>
+              <button className="w-full bg-blue-500 p-2 rounded-xl text-white font-pop mt-5">
+                Update
+              </button>
+
+              <div className="text-blue-500 font-pop text-sm w-full flex justify-center items-center mt-5 group cursor-pointer">
+                View Help Docs{" "}
+                <UilAngleRightB className="w-5 group-hover:translate-x-2 transition duration-200" />{" "}
+              </div>
+            </div>
+            {/* Mobile */}
+          </div>
+
+          {/* Mobile */}
+          <div className="absolute w-full left-0 bottom-0 mt-10 bg-gray-100 p-4 rounded-2xl sm:hidden block">
+            <span className="text-gray-800 text-md font-semibold font-pop">
+              Retirement Strategy
+            </span>
+            {/* Employee Contribution */}
+            <div className="text-sm font-pop mt-4 flex flex-col">
+              <span className="font-semibold text-sm">
+                Employee Contribution
+              </span>
+              <div className="flex items-center sm:w-[240px] w-full">
+                <div className="w-full mt-2 flex items-center justify-between ">
+                  <UiSlider
+                    value={value}
+                    onChange={handleChange}
+                    aria-labelledby="continuous-slider"
+                  />
+                  <div className="font-semibold">{value}%</div>
+                </div>
+              </div>
+            </div>
+            {/* Retirement Age */}
+            <div className="text-sm font-pop mt-4 flex flex-col">
+              <span className="font-semibold text-sm">Retirement Age</span>
+              <div className="flex items-center sm:w-[240px] w-full">
+                <div className="w-full mt-2 flex items-center justify-between ">
+                  <UiSlider
+                    value={value2}
+                    onChange={handleChange2}
+                    aria-labelledby="continuous-slider"
+                  />
+                  <div className="font-semibold">{value2}</div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full border-b-2 border-gray-300 rounded-xl my-3"></div>
+            <div className="w-full">
+              <div className="w-full text-sm font-pop flex justify-between font-semibold">
+                <span>Employer Contribution</span>
+                <span>8.4%</span>
+              </div>
+              <div className="w-full text-sm font-pop flex justify-between font-semibold mt-3 mb-20">
+                <span>Interest Rate</span>
+                <span>5%</span>
+              </div>
+              <button className="w-full absolute z-50 left-0 bottom-0 bg-blue-500 p-5 text-white font-pop mt-5">
+                Update
+              </button>
+            </div>
+          </div>
+
+          {/* Peers */}
+          <div className="block sm:hidden mt-10">
+            <div className="flex flex-col font-pop">
+              <span className="font-semibold">How do I compare my peers?</span>
+              <span className="text-xs text-gray-400">
+                These numbers represent current goal achievement
+              </span>
+            </div>
+            <div className="flex flex-col justify-center mt-2">
+              <div className="flex flex-col font-pop text-md">
+                <div className="pb-2 border-b-2 flex gap-1 mb-5">
+                  <span className="font-semibold">Age: </span>
+                  <span className=" cursor-pointer flex">
+                    Under 30 <UilAngleDown />{" "}
+                  </span>
+                </div>
+                <div className="pb-2 border-b-2 flex gap-1 mb-5">
+                  <span className="font-semibold">Salary: </span>
+                  <span className=" cursor-pointer flex">
+                    K 20 - K 30 <UilAngleDown />{" "}
+                  </span>
+                </div>
+                <div className="pb-2 border-b-2 flex gap-1 mb-5">
+                  <span className="font-semibold">Gender: </span>
+                  <span className=" cursor-pointer flex">
+                    Male <UilAngleDown />{" "}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-5 justify-center mt-5">
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={78} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Average
+                  </span>
+                </span>
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={95} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Top
+                  </span>
+                </span>
+                <span className="flex flex-col items-center justify-center">
+                  <ProgressBar progress={59} />
+                  <span className="text-xs font-pop text-gray-500 mt-2">
+                    Me
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-5 sm:flex hidden flex-col border-l-2  font-pop border-blue-400 px-5 ">
+          <span className="text-sm">Are you considering</span>
+          <span className="text-sm font-semibold">Housing Advance?</span>
+          <span className="text-xs text-gray-400">
+            Limited time reduced interest
+          </span>
+          <div className="text-blue-500 text-xs flex justify-start items-center mt-2 group cursor-pointer">
+            Learn More{" "}
+            <UilAngleRightB className="w-4 group-hover:translate-x-2 transition duration-200" />{" "}
+          </div>
+        </div>
       </div>
     </div>
   );
